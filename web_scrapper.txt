@@ -1,0 +1,28 @@
+import requests
+import bs4
+
+request1=requests.get("https://www.flipkart.com/poco-c31-royal-blue-64-gb/p/itm19effae969b86")
+request1
+
+request1.content
+
+soup=bs4.BeautifulSoup(request1.text)
+soup
+
+reviews=soup.findAll('div',{'class':'t-ZTKy'})
+for review in reviews:
+    print(review.get_text()+"\n\n")	
+
+rating=soup.find('div',{'class':'_2d4LTz'}).getText()
+print(rating)
+
+i_ratings=soup.findAll('div',{'class':'_3LWZlK _1BLPMq'});
+for rating in i_ratings:
+    print(rating.get_text()+ "\n")
+
+names=soup.findAll('p',{'class':'_2sc7ZR _2V5EHH'})
+for rating in names:
+    print(rating.get_text()+ "\n")
+
+tags=soup.find('span',{'class':'yhB1nd GXgmTe'}).getText()
+print(tags)

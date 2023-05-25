@@ -1,0 +1,58 @@
+import pandas as pd
+import numpy as np
+
+file=pd.read_csv("C:\\Users\\DELL\\Desktop\\airquality.csv")
+file
+
+file['Ozone'].fillna(file['Ozone'].mean(), inplace=True)
+file['Solar.R'].fillna(file['Solar.R'].mean(), inplace=True)
+file['Wind'].fillna(file['Wind'].mean(), inplace=True)
+file['Humidity'].fillna("Medium",inplace=True)
+file
+
+file.isnull().sum()
+
+from sklearn.model_selection import train_test_split
+
+X=file[['Ozone']]
+Y=file[['Temp']]
+
+Xtrain,Xtest,Ytrain,Ytest=train_test_split(X,Y,test_size=0.3,random_state=30)
+
+Xtrain.shape
+
+Xtest.shape	
+
+Xtest.shape
+
+Ytest.shape
+
+from sklearn import linear_model
+reg=linear_model.LinearRegression()
+
+model=reg.fit(Xtrain,Ytrain)
+model
+
+prediction = model.predict(x_test)
+prediction
+
+Ypred=model.predict(Xtest)
+print(Ypred)
+
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
+mse=mean_squared_error(Ytest,Ypred)
+mae=mean_absolute_error(Ytest,Ypred)
+r2= r2_score(Ytest,Ypred)
+
+print('Mean squared error :',mse)
+print('Root mean square error:',mae)
+print('r2:',r2)
+
+import matplotlib.pyplot as plt
+plt.figure(figsize=(10,7))
+plt.title('Year vs Temperature')
+plt.xlabel('YEAR')
+plt.ylabel('Temperature')
+plt.plot(Xtrain,reg.predict(Xtrain),color='red')
+plt.scatter(Xtrain,Ytrain,color='blue')
